@@ -9,5 +9,14 @@ import Product from "./Product.js";
 User.hasMany(Order);
 Order.belongsTo(User);
 
+// One-to-Many (Category has many Products)
+Category.hasMany(Product,{
+    foreignKey:'categoryId',
+    onDelete: 'CASCADE',
+});
+Product.belongsTo(Category,{
+    foreignKey:'categoryId',
+});
+
 // Sync
 await sequelize.sync();
