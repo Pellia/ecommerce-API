@@ -1,9 +1,9 @@
-import { productSchema } from "../schemas/productSchemas.js";
-
-export const validateSchema = (schema) => (req,res,next) => {
+const validateSchama = (schema) => (req, res, next) => {
     const { error } = schema.validate(req.body);
-  if (error) {
-    return res.status(400).send(error.details[0].message);
-  }
-  next();
+    if (error) {
+        return res.status(400).json({ error: error.details[0].message });
+    }
+    next();
 };
+
+export default validateSchama;

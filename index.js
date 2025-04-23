@@ -5,6 +5,7 @@ import userRoutes from "./routers/userRoutes.js";
 import orderRoutes from "./routers/orderRoutes.js";
 import errorHandler from "./utils/errorHandler.js";
 import("./models/Association.js");
+import errorHandler from "./utils/errorHandler.js";
 
 // Define Server
 const app = express();
