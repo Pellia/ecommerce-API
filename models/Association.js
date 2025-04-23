@@ -10,13 +10,17 @@ User.hasMany(Order);
 Order.belongsTo(User);
 
 // One-to-Many (Category has many Products)
-Category.hasMany(Product,{
-    foreignKey:'categoryId',
-    onDelete: 'CASCADE',
+Category.hasMany(Product, {
+    foreignKey: "categoryId",
+    onDelete: "CASCADE",
 });
-Product.belongsTo(Category,{
-    foreignKey:'categoryId',
+Product.belongsTo(Category, {
+    foreignKey: "categoryId",
 });
+
+// One-to-Many (Order has many Products)
+Order.hasMany(Product);
+Product.belongsTo(Order);
 
 // Sync
 await sequelize.sync();

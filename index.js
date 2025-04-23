@@ -3,7 +3,7 @@ import { productRoutes } from "./routers/productRoutes.js";
 import { categoryRoutes } from "./routers/categoryRoutes.js";
 import userRoutes from "./routers/userRoutes.js";
 import orderRoutes from "./routers/orderRoutes.js";
-import errorHandler from "./utils/errorHandler.js";
+import errorHandler from "./middleware/errorHandler.js";
 import("./models/Association.js");
 import errorHandler from "./utils/errorHandler.js";
 
