@@ -4,6 +4,7 @@ import { categoryRouter } from "./routers/categoryRoutes.js";
 import userRoutes from "./routers/userRoutes.js";
 import orderRoutes from "./routers/orderRoutes.js";
 import("./models/Association.js");
+import errorHandler from "./utils/errorHandler.js";
 
 // Define Server
 const app = express();
@@ -15,6 +16,8 @@ app.use("/products", productRouter);
 app.use("/categories", categoryRouter);
 app.use("/users", userRoutes);
 app.use("/orders", orderRoutes);
+
+app.use(errorHandler);
 
 // Start Server
 app.listen(port, () => console.log(`Server is running on port http://localhost:${port}`));
