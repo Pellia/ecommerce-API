@@ -5,7 +5,13 @@ import { DataTypes } from "sequelize";
 const Order = sequelize.define("Order", {
     products: {
         type: DataTypes.STRING,
-        allowNull: true,
+        get: function () {
+            return JSON.parse(this.getDataValue("products"));
+        },
+        set: function (val) {
+            return this.setDataValue("products", JSON.stringify(val));
+        },
+        allowNull: false,
     },
     total: {
         type: DataTypes.FLOAT,
