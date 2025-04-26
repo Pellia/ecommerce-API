@@ -21,8 +21,8 @@ Product.belongsTo(Category, {
 });
 
 // One-to-Many (Order has many Products)
-Order.hasMany(Product);
-Product.belongsTo(Order);
+// Order.hasMany(Product);
+// Product.belongsTo(Order);
 
 // Sync
 await sequelize.sync();
