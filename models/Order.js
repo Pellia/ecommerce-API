@@ -13,7 +13,7 @@ const Order = sequelize.define("Order", {
         set: function (val) {
             return this.setDataValue("products", JSON.stringify(val));
         },
-        allowNull: true,
+        allowNull: false,
     },
     total: {
         type: DataTypes.FLOAT,
