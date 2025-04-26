@@ -1,7 +1,7 @@
 import Category from "../models/Category.js";
 import ErrorResponse from "../utils/ErrorResponse.js";
 
-// category controller
+// GET Categories
 export const getCategories = async (req, res) => {
     const categories = await Category.findAll({
         attributes: ["id", "name"],
@@ -9,6 +9,7 @@ export const getCategories = async (req, res) => {
     res.json(categories);
 };
 
+// POST Category
 export const createCategory = async (req, res) => {
     const {
         body: { name },
@@ -16,29 +17,32 @@ export const createCategory = async (req, res) => {
     if (!name) throw new ErrorResponse("name is required", 400);
     const categoryExists = await Category.findOne({ where: { name } });
     if (categoryExists) throw new ErrorResponse("Category with that name already exists", 400);
-    const createCategory = await Category.create(req.body);
-    const getCategory = await Category.findAll({
+    const category = await Category.create(req.body);
+    const categories = await Category.findAll({
         attributes: ["id", "name"],
         where: {
-            id: createCategory.id,
+            id: category.id,
         },
     });
-    res.json(getCategory);
+    res.json(categories);
 };
 
+// GET Category by ID
 export const getCategoryById = async (req, res) => {
-    try {
         const {
             params: { id },
         } = req;
-        const category = await Category.findByPk(id);
-        if (!category) return res.status(404).json({ error: `Category with ID:${id} not found` });
+        const category = await Category.findAll({
+            attributes: ["id", "name"],
+            where: {
+                id: id,
+            },
+        });
+        if (!category) throw new ErrorResponse(`Category with ID:${id} not found`,400);
         res.json(category);
-    } catch (error) {
-        res.status(500).json({ error: error.message });
-    }
 };
 
+//PUT Category
 export const updateCategory = async (req, res) => {
     const {
         body: { name },
@@ -51,15 +55,22 @@ export const updateCategory = async (req, res) => {
     const categoryExists = await Category.findOne({ where: { name } });
     if (categoryExists) throw new ErrorResponse("Category with that name already exists", 400);
     await category.update(req.body);
-    res.json(category);
+    const categories = await Category.findAll({
+        attributes: ["id", "name"],
+        where: {
+            id: category.id,
+        },
+    });
+    res.json(categories);
 };
 
+//DELETE Category
 export const deleteCategory = async (req, res) => {
     const {
         params: { id },
     } = req;
     const category = await Category.findByPk(id);
-    if (!category) throw new Error(`Category with ID: ${id} not found`);
+    if (!category) throw new ErrorResponse(`Category with ID: ${id} not found`,400);
     await category.destroy();
     res.json({ message: `Category with ID: ${id} deleted` });
 };
