@@ -1,6 +1,9 @@
 import Order from "../models/Order.js";
+import Product from "../models/Product.js";
+import User from "../models/User.js";
+import ErrorResponse from "../utils/ErrorResponse.js";
 
-// Get Users
+// Get Orders
 export const getOrders = async (req, res) => {
     try {
         const users = await Order.findAll();
@@ -10,24 +13,17 @@ export const getOrders = async (req, res) => {
     }
 };
 
-// Create User
+// Create Order
 export const createOrder = async (req, res) => {
-    try {
-        // const {
-        //     body: { name, password, email },
-        // } = req;
-        // if (!name || !password || !email) return res.status(400).json({ error: "name, password, and email are required" });
-        // const found = await Order.findOne({ where: { email } });
-        // if (found) return res.status(400).json({ error: "User already exists" });
-        // const user = await Order.create(req.body);
-        // res.json(user);
-        res.send("Order created");
-    } catch (error) {
-        res.status(500).json({ error: error.message });
-    }
+    const {
+        body: { userId, products },
+    } = req;
+    if (!userId || !products) throw new ErrorResponse("UserId and products are required", 400);
+    const order = await Order.create(req.body);
+    res.json(order);
 };
 
-// Get User by ID
+// Get Order by ID
 export const getOrderById = async (req, res) => {
     try {
         // const {
@@ -42,7 +38,7 @@ export const getOrderById = async (req, res) => {
     }
 };
 
-// Update User by ID
+// Update Order by ID
 export const updateOrder = async (req, res) => {
     try {
         // const {
@@ -60,7 +56,7 @@ export const updateOrder = async (req, res) => {
     }
 };
 
-// Delete User by ID
+// Delete Order by ID
 export const deleteOrder = async (req, res) => {
     try {
         // const {

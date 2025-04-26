@@ -7,7 +7,9 @@ import Product from "./Product.js";
 // Relationsships
 // One-to-Many (User has many Orders)
 User.hasMany(Order);
-Order.belongsTo(User);
+Order.belongsTo(User, {
+    foreignKey: "userId",
+});
 
 // One-to-Many (Category has many Products)
 Category.hasMany(Product, {
