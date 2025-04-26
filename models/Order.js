@@ -1,5 +1,7 @@
 import sequelize from "../db/neon_pg.js";
 import { DataTypes } from "sequelize";
+import User from "./User.js";
+import Product from "./Product.js";
 
 // Order Model
 const Order = sequelize.define("Order", {
@@ -15,7 +17,7 @@ const Order = sequelize.define("Order", {
     },
     total: {
         type: DataTypes.FLOAT,
-        allowNull: false,
+        allowNull: true,
     },
 });
 
