@@ -6,7 +6,7 @@ const orderSchema = Joi.object({
     //     productId: Joi.number().integer().required(),
     //     quantity: Joi.number().integer().min(1).required(),
     // }),
-    products: Joi.JSONB().required(),
+    products: Joi.string().min(3).required(),
 });
 
 export default orderSchema;
