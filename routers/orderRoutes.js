@@ -1,5 +1,7 @@
 import { Router } from "express";
 import { createOrder, deleteOrder, getOrderById, getOrders, updateOrder } from "../controller/order.js";
+import validateSchama from "../middleware/validateSchema.js";
+import orderSchema from "../schemas/orderSchema.js";
 
 const orderRoutes = Router();
 
@@ -7,13 +9,13 @@ const orderRoutes = Router();
 orderRoutes.get("/", getOrders);
 
 // Create new Order
-orderRoutes.post("/", createOrder);
+orderRoutes.post("/", validateSchama(orderSchema), createOrder);
 
 // Get Order by ID
 orderRoutes.get("/:id", getOrderById);
 
 // Update Order by ID
-orderRoutes.put("/:id", updateOrder);
+orderRoutes.put("/:id", validateSchama(orderSchema), updateOrder);
 
 // Delete Order by ID
 orderRoutes.delete("/:id", deleteOrder);
