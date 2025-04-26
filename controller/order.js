@@ -16,7 +16,7 @@ const getTotal = async (products) => {
         if (!price) throw new ErrorResponse("price not found", 400);
         total += price.dataValues["price"] * arr[item]["quantity"];
     }
-    return total;
+    return total.toFixed(2);
 };
 
 // Get Orders
@@ -29,11 +29,7 @@ export const getOrders = async (req, res) => {
 
 // Create Order
 export const createOrder = async (req, res) => {
-    const {
-        body: { UserId, products },
-    } = req;
-    if (!UserId || !products) throw new ErrorResponse("UserId and products are required", 400);
-    req.body["total"] = await getTotal(products);
+    req.body["total"] = await getTotal(req.body.products);
     const order = await Order.create(req.body);
     const orders = await Order.findAll({
         attributes: ["id", "UserId", "products", "total"],
@@ -62,18 +58,14 @@ export const getOrderById = async (req, res) => {
 // Update Order by ID
 export const updateOrder = async (req, res) => {
     const {
-        body: { UserId, products },
         params: { id },
     } = req;
-    if (!UserId || !products) throw new ErrorResponse("UserId and products are required", 400);
-
-    req.body["total"] = await getTotal(products);
+    req.body["total"] = await getTotal(req.body.products);
 
     const order = await Order.findByPk(id);
     if (!order) throw new ErrorResponse("Order not found", 404);
 
     await order.update(req.body);
-
     const orders = await Order.findAll({
         attributes: ["id", "UserId", "products", "total"],
         where: {

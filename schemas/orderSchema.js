@@ -1,12 +1,13 @@
 import Joi from "joi";
 
 const orderSchema = Joi.object({
-    userId: Joi.number().integer().required(),
-    // products: Joi.JSONB({
-    //     productId: Joi.number().integer().required(),
-    //     quantity: Joi.number().integer().min(1).required(),
-    // }),
-    products: Joi.string().min(3).required(),
+    UserId: Joi.number().integer().required(),
+    products: Joi.array().items(
+        Joi.object({
+            productId: Joi.number().integer().required(),
+            quantity: Joi.number().integer().required(),
+        })
+    ),
 });
 
 export default orderSchema;

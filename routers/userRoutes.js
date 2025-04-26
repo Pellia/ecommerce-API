@@ -10,13 +10,13 @@ const userRoutes = Router();
 userRoutes.get("/", getUsers);
 
 // Create new User
-userRoutes.post("/", validateSchama(userSchema), createUser);
+userRoutes.post("/", validateSchama(userSchema), asyncHandler(createUser));
 
 // Get User by ID
 userRoutes.get("/:id", getUserById);
 
 // Update User by ID
-userRoutes.put("/:id", validateSchama(userSchema), updateUser);
+userRoutes.put("/:id", validateSchama(userSchema), asyncHandler(updateUser));
 
 // Delete User by ID
 userRoutes.delete("/:id", deleteUser);
